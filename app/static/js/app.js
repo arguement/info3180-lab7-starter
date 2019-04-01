@@ -60,8 +60,8 @@ const upload_form = Vue.component("upload-form",{
             <div class="alert alert-success" role="alert" v-if="flash.on && flash.success" v-for="i in flash.mess">
                 {{i}}
             </div>
-            <div class="alert alert-danger" role="alert" v-if="flash.on && !flash.success">
-                This is a danger alert—check it out!
+            <div class="alert alert-danger" role="alert" v-if="flash.on && !flash.success" v-for="i in flash.mess">
+                {{i}}
             </div>   
             <div class="form-group">
                 <label for="description">Example textarea</label>
@@ -99,8 +99,10 @@ const upload_form = Vue.component("upload-form",{
                          self.flash.on = true;
                          self.flash.success = true;
                      }else{
-                        self.flash.mess = jsonResponse.errors;
+                        self.flash.mess = jsonResponse.errors.slice(2,jsonResponse.errors.length-2).split(",");
+                        console.log(self.flash.mess);
                         self.flash.on = true;
+                        self.flash.success = false;
                      }
                     console.log(jsonResponse);    
                  }).catch(function (error) {  
